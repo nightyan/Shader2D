@@ -1,4 +1,4 @@
-Shader "Custom/Unlit - Flash"
+Shader "Custom/Flash"
 {
     Properties
     {

@@ -1,4 +1,4 @@
-Shader "Custom/Unlit - EarthRotate"
+Shader "Custom/EarthRotate"
 {
     Properties
     {

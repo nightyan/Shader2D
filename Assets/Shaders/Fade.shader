@@ -1,4 +1,4 @@
-Shader "Custom/Unlit - Fade" {
+Shader "Custom/Fade" {
     Properties {
         _MainTex ("Texture", 2D) = "white" { }
         _FadeDistanceNear ("Near fadeout dist (View Space)", float) = 35    

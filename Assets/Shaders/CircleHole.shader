@@ -1,4 +1,4 @@
-Shader "Custom/Unlit - CircleHole" {
+Shader "Custom/CircleHole" {
     Properties {
         _MainTex ("Base (RGB)", 2D) = "white" {}
         _Center ("Center", vector) = (0.5, 0.5, 0, 0)

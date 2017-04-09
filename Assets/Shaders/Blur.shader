@@ -1,4 +1,4 @@
-Shader "Custom/Unlit - Blur" {
+Shader "Custom/Blur" {
     Properties {
         _MainTex ("Base (RGB)", 2D) = "white" {}
     }
