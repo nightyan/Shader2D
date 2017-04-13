@@ -6,6 +6,7 @@ Shader "Custom/BlurGauss"
     {
         _MainTex ("Base (RGB), Alpha (A)", 2D) = "black" {}
         _TexSize("Texture Size", vector) = (256,256,0,0)
+        _BlurOffset("Blur Offset", Range(1, 10)) = 1
     }
     
     SubShader
@@ -35,6 +36,7 @@ Shader "Custom/BlurGauss"
 
             sampler2D _MainTex;
             float4 _TexSize;
+            fixed _BlurOffset;
             float4 _MainTex_ST;
 
             struct appdata_t
@@ -69,7 +71,7 @@ Shader "Custom/BlurGauss"
                     for (int j = 0; j < 3; j++)
                     {
                         //计算采样点，得到当前像素附近的像素的坐标
-                        float2 newCoord = float2(coord.x + i-1, coord.y + j-1);
+                        float2 newCoord = float2(coord.x + (i-1)*_BlurOffset, coord.y + (j-1)*_BlurOffset);
                         float2 newUV = float2(newCoord.x / texSize.x, newCoord.y / texSize.y);
                         //采样并乘以滤波器权重，然后累加
                         outCol += tex2D(tex, newUV) * filter[i][j];
