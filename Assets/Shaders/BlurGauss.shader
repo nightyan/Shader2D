@@ -1,3 +1,5 @@
+// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
+
 Shader "Custom/BlurGauss"
 {
     Properties
@@ -32,7 +34,6 @@ Shader "Custom/BlurGauss"
             #include "UnityCG.cginc"
 
             sampler2D _MainTex;
-            float _SquareWidth;
             float4 _TexSize;
             float4 _MainTex_ST;
 
@@ -53,29 +54,22 @@ Shader "Custom/BlurGauss"
             v2f vert (appdata_t v)
             {
                 v2f o;
-                o.vertex = mul(UNITY_MATRIX_MVP, v.vertex);
+                o.vertex = UnityObjectToClipPos(v.vertex);
                 o.uv = v.uv;
                 o.color = v.color;
                 return o;
             }
             
+            //对图像做滤波操作
             float4 filter(float3x3 filter, sampler2D tex, float2 coord, float2 texSize)
             {
-                float2 filterCoord[3][3] = 
-                {
-                    {float2(-1,-1), float2(0,-1), float2(1,-1)},
-                    {float2(-1,0),  float2(0,0),  float2(1,0)},
-                    {float2(-1,1),  float2(0,1), float2(1,1)},
-                };
                 float4 outCol = float4(0,0,0,0);
-                
-                //对图像做滤波操作
                 for (int i = 0; i < 3; i++)
                 {
                     for (int j = 0; j < 3; j++)
                     {
                         //计算采样点，得到当前像素附近的像素的坐标
-                        float2 newCoord = float2(coord.x + filterCoord[i][j].x, coord.y + filterCoord[i][j].y);
+                        float2 newCoord = float2(coord.x + i-1, coord.y + j-1);
                         float2 newUV = float2(newCoord.x / texSize.x, newCoord.y / texSize.y);
                         //采样并乘以滤波器权重，然后累加
                         outCol += tex2D(tex, newUV) * filter[i][j];

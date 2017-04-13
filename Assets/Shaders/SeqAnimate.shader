@@ -40,7 +40,7 @@ Shader "Custom/SeqAnimate" {
         
         void surf (Input IN, inout SurfaceOutput o)
         {
-            int index = floor(_Time.x * _Speed);
+            uint index = floor(_Time.x * _Speed);
             index = index % _FrameCount;
             int indexY = index / _Cols;
             int indexX = index - indexY * _Cols;

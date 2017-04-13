@@ -1,3 +1,5 @@
+// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
+
 Shader "Custom/Flash"
 {
     Properties
@@ -62,7 +64,7 @@ Shader "Custom/Flash"
             v2f o;
             v2f vert (appdata_t v)
             {
-                o.vertex = mul(UNITY_MATRIX_MVP, v.vertex);
+                o.vertex = UnityObjectToClipPos(v.vertex);
                 o.texcoord = v.texcoord;
                 o.color = v.color;
                 return o;
