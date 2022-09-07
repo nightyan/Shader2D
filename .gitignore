@@ -1,5 +1,10 @@
-Assets/ReadMe.meta
-Assets/ReadMe/
 Library/
 Temp/
-ProjectSettings/ProjectVersion.txt
+Logs/
+obj/
+.vs/
+
+.vsconfig
+Assembly-CSharp-Editor.csproj
+Assembly-CSharp.csproj
+Shader2D.sln
