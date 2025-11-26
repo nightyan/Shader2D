@@ -16,6 +16,9 @@ Shader "Custom/SeqAnimate" {
 
         CGPROGRAM
         #pragma surface surf NoLighting alpha
+        
+        // Enable the required extension for integer modulus
+        #pragma target 3.0
 
         sampler2D _MainTex;
         fixed4 _Color;
@@ -40,12 +43,14 @@ Shader "Custom/SeqAnimate" {
         
         void surf (Input IN, inout SurfaceOutput o)
         {
-            uint index = floor(_Time.x * _Speed);
-            index = index % _FrameCount;
-            int indexY = index / _Cols;
-            int indexX = index - indexY * _Cols;
+            // Alternative approach: use fmod instead of integer modulus
+            float index = floor(_Time.x * _Speed);
+            index = fmod(index, _FrameCount);
             
-            float2 uv = float2(IN.uv_MainTex.x /_Cols, IN.uv_MainTex.y /_Rows);
+            float indexY = floor(index / _Cols);
+            float indexX = index - indexY * _Cols;
+            
+            float2 uv = float2(IN.uv_MainTex.x / _Cols, IN.uv_MainTex.y / _Rows);
             uv.x += indexX / _Cols;
             uv.y += indexY / _Rows;
             
